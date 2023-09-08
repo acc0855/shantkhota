@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Home</title>
+    <!-- Include the Push.js library -->
+    <script src="push.min.js"></script>
+    <script src="serviceWorker.min.js"></script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/push.js/1.0.9/push.min.js"></script>
+</head>
+<body>
+    <!-- You can add a button to trigger the notification -->
+    <button id="showNotificationButton">Show Notification</button>
+
+    <script type="text/javascript">
+        // Wait for the document to load
+        document.addEventListener("DOMContentLoaded", function () {
+            // Find the button element
+            var showNotificationButton = document.getElementById('showNotificationButton');
+
+            // Add a click event listener to the button
+            showNotificationButton.addEventListener('click', function () {
+                // Request permission for notifications (required)
+                Push.Permission.request();
+
+                // Check if notifications are supported
+                if (!Push.Permission.has()) {
+                    alert('Notifications are not supported in this browser.');
+                    return;
+                }
+
+            
+                Push.create("Title", {
+                    body: "Body",
+                    icon: '1.jpg',
+                    timeout: 4000,
+                    vibrate: [200, 100], // Vibrate for 200ms, pause for 100ms, then vibrate for 200ms again
+                    onClick: function () {
+                        window.focus();
+                        this.close();
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
